@@ -167,7 +167,6 @@ var player={
 					if ( intersects.length > 0 ) {
 						touch.name=intersects[ 0 ].object.name;
 						touch.point=intersects[ 0 ].object
-						heightLight(intersects[ 0 ].object)
 					}
 			}
 			function onDocumentMouseDown( event ) {
@@ -205,6 +204,7 @@ var player={
 			function onDocumentMouseUp( event ) {
 				var uptime=new Date().getTime();
 				if(uptime-touch.time<300){
+					heightLight(touch.point)
 					source.chooseObj(touch.point.name)
 				}
 					
@@ -275,6 +275,7 @@ var player={
 			function onDocumentTouchEnd(event){
 				var uptime=new Date().getTime();
 				if(uptime-touch.time<300){
+					heightLight(touch.point)
 					source.chooseObj(touch.point.name)
 				}
 					

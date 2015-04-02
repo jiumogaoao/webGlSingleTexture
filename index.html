@@ -89,6 +89,8 @@
 				player.chooseObj=function(name){
 					if(spaceGroup[name]){
 						playerReload(name)
+					}else if(descriptionGroup[name]){
+						$("#message").html(descriptionGroup[name].description)
 					}
 				}
 				player.load();
