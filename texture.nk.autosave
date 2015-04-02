@@ -1,0 +1,211 @@
+#! D:/Nuke6.2v1/Nuke6.2.exe -nx
+version 6.2 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1366" h="728" screen="0">
+        <splitter orientation="1">
+            <split size="853"></split>
+            <splitter orientation="1">
+                <split size="40"></split>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"></page>
+                </dock>
+                <split size="809"></split>
+                <splitter orientation="2">
+                    <split size="330"></split>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"></page>
+                    </dock>
+                    <split size="330"></split>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"></page>
+                        <page id="Curve Editor.1"></page>
+                        <page id="DopeSheet.1"></page>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="493"></split>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"></page>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name H:/app/webGLMesh/texture.nk
+ last_frame 2
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/pz_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read7
+ xpos 301
+ ypos -129
+}
+Transform {
+ translate {772 97}
+ scale 1.321
+ center {256 256}
+ name Transform6
+ xpos 294
+ ypos -43
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/py_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read6
+ xpos 194
+ ypos -130
+}
+Transform {
+ translate {772 773}
+ scale {1.321 1.321}
+ center {256 256}
+ name Transform5
+ xpos 194
+ ypos -44
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/px_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read5
+ xpos 85
+ ypos -132
+}
+Transform {
+ translate {1447 97}
+ scale 1.321
+ center {256 256}
+ name Transform4
+ xpos 85
+ ypos -46
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/nz_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read4
+ xpos -18
+ ypos -128
+}
+Transform {
+ translate {1447 773}
+ rotate -90
+ scale 1.321
+ center {256 256}
+ name Transform3
+ xpos -18
+ ypos -42
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/ny_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read3
+ xpos -137
+ ypos -132
+}
+Transform {
+ translate {97 773}
+ scale 1.321
+ center {256 256}
+ name Transform2
+ xpos -137
+ ypos -46
+}
+push 0
+Read {
+ inputs 0
+ file H:/app/webGLMesh/texture/nx_######.gif
+ format "512 512 0 0 512 512 1 square_512"
+ last 2
+ origlast 2
+ origset true
+ name Read2
+ xpos -226
+ ypos -134
+}
+Transform {
+ translate {97 97}
+ scale 1.321
+ center {256 256}
+ name Transform1
+ xpos -226
+ ypos -48
+}
+Read {
+ inputs 0
+ file H:/app/webGLMesh/uv.png
+ format "2048 2048 0 0 2048 2048 1 square_2K"
+ origset true
+ name Read1
+ xpos -72
+ ypos -204
+}
+Merge2 {
+ inputs 7+1
+ name Merge1
+ xpos -88
+ ypos 3
+}
+set N7ef4cd0 [stack 0]
+EXPTool {
+ red 0.2
+ green 0.2
+ blue 0.2
+ name EXPTool1
+ xpos 55
+ ypos 3
+}
+Write {
+ file H:/app/webGLMesh/testHl.png
+ file_type png
+ use_limit true
+ checkHashOnRead false
+ version 1
+ name Write2
+ selected true
+ xpos 36
+ ypos 57
+}
+Viewer {
+ input_process false
+ name Viewer1
+ xpos -88
+ ypos 109
+}
+push $N7ef4cd0
+Write {
+ file H:/app/webGLMesh/test.png
+ file_type png
+ use_limit true
+ checkHashOnRead false
+ version 5
+ name Write1
+ xpos -88
+ ypos 49
+}

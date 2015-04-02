@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+		body {
+			margin: 0px;
+			overflow: hidden;
+			-webkit-transform:translate3d(0,0,0);
+		}
+		#message{
+			width:100%;
+			font-size:15px;
+			color:#fff;
+			position:absolute;
+			top:0px;
+			left:0px;
+			z-index:9999999;
+			text-align:center
+			}
+		</style>
+	</head>
+	<body ontouchstart="">
+		<script type="text/javascript" src="js/zepto/zepto.js"></script>
+        <script type="text/javascript" src="js/zepto/detect.js"></script>
+        <script type="text/javascript" src="js/zepto/event.js"></script>
+        <script type="text/javascript" src="js/zepto/ajax.js"></script>
+        <script type="text/javascript" src="js/zepto/form.js"></script>
+        <script type="text/javascript" src="js/zepto/fx.js"></script>
+        <script type="text/javascript" src="js/zepto/fx_methods.js"></script>
+        <script type="text/javascript" src="js/zepto/data.js"></script>
+        <script type="text/javascript" src="js/zepto/assets.js"></script>
+        <script type="text/javascript" src="js/zepto/selector.js"></script>
+        <script type="text/javascript" src="js/zepto/zTouch.js"></script>
+		<script src="js/three.min.js"></script>
+		<script src="js/OBJLoader.js"></script>
+		<script src="js/CanvasRenderer.js"></script>
+		<script src="js/Projector.js"></script>
+		
+        <div id="container"></div>
+        <div id="message">请点击</div>
+
+		<script src="js/app.js"></script>
+		<script type="text/javascript">
+			player.setObj(["house1.obj","house2.obj","house3.obj","house4.obj","house5.obj","house6.obj","house7.obj"]);
+			player.setTexture(["test.gif","testHl.gif"]);
+			debugger;
+			player.chooseObj=function(name){
+				$("#message").html(name);
+			}
+			player.load();
+			player.play();
+		</script>
+	</body>
+</html>
