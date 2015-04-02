@@ -43,15 +43,15 @@ var player={
 			raycaster = new THREE.Raycaster(),
 			mouse = new THREE.Vector2(),
 			objs=[],
-			textureUrl=[],
+			textureUrl="",
 			lastMt=null,
-			texture = new THREE.Texture();
+			texture;
 			
 			
 
 			function init() {
-
-				var container, mesh;
+	
+				var container;
 
 				container = document.getElementById( 'container' );
 
@@ -59,8 +59,9 @@ var player={
 
 				scene = new THREE.Scene();
 
+				texture = new THREE.Texture();
 				// texture
-
+		
 				var manager = new THREE.LoadingManager();
 				manager.onProgress = function ( item, loaded, total ) {
 
@@ -68,7 +69,6 @@ var player={
 
 				};
 
-				
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;
@@ -79,7 +79,6 @@ var player={
 				var onError = function ( xhr ) {
 				};
 
-
 				var Tloader = new THREE.ImageLoader( manager );
 				Tloader.load( textureUrl, function ( image ) {
 
@@ -88,15 +87,15 @@ var player={
 
 				} );
 				// model
-
+		
 				var loader = new THREE.OBJLoader( manager );
 				$.each(objs,function(i,n){
 					loader.load( n, function ( object ) {
 
 					object.traverse( function ( child ) {
-							console.log(child)
+							
 						if ( child instanceof THREE.Mesh ) {
-							console.log(child)
+							
 							child.material=new THREE.MeshBasicMaterial( { map: texture,overdraw:1.5,transparent:true,opacity:1 } );
 
 						}
@@ -104,21 +103,22 @@ var player={
 					} );
 
 						scene.add( object.children[0] );
-						console.log(scene)
+						
 
 					}, onProgress, onError );
 				})
 				
 
-
+		
 				if ( webglAvailable() ) {
 							renderer = new THREE.WebGLRenderer();
 						} else {
 							renderer = new THREE.CanvasRenderer();
 						}
-				//renderer.setPixelRatio( window.devicePixelRatio );
+		
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.setClearColor( 0xff0000 );
+	
 				container.appendChild( renderer.domElement );
 
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -130,9 +130,10 @@ var player={
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 				document.addEventListener( 'touchend', onDocumentTouchEnd, false );
-				//
+				
 
 				window.addEventListener( 'resize', onWindowResize, false );
+
 
 			}
 
@@ -162,7 +163,7 @@ var player={
 					raycaster.setFromCamera( mouse, camera );
 	
 					var intersects = raycaster.intersectObjects( scene.children );
-					console.log(intersects)
+					
 					if ( intersects.length > 0 ) {
 						touch.name=intersects[ 0 ].object.name;
 						touch.point=intersects[ 0 ].object
@@ -288,25 +289,25 @@ var player={
 			}
 
 			function update() {
-
+		
 				if ( isUserInteracting === false ) {
 
 					lon += 0.1;
 
 				}
-
+		
 				lat = Math.max( - 85, Math.min( 85, lat ) );
 				phi = THREE.Math.degToRad( 90 - lat );
 				theta = THREE.Math.degToRad( lon );
-
+			
 				target.x = 500 * Math.sin( phi ) * Math.cos( theta );
 				target.y = 500 * Math.cos( phi );
 				target.z = 500 * Math.sin( phi ) * Math.sin( theta );
-
+				
 				camera.position.copy( target ).negate();
 				camera.lookAt( target );
-
 				renderer.render( scene, camera );
+				
 
 			}
 			function setObj(array){

@@ -1,32 +1,32 @@
-#! D:/Nuke6.2v1/Nuke6.2.exe -nx
-version 6.2 v1
+#! d:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
 define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
 <layout version="1.0">
-    <window x="0" y="22" w="1366" h="728" screen="0">
+    <window x="0" y="22" w="1600" h="860" screen="0">
         <splitter orientation="1">
-            <split size="853"></split>
+            <split size="1001"/>
             <splitter orientation="1">
-                <split size="40"></split>
+                <split size="40"/>
                 <dock id="" hideTitles="1" activePageId="Toolbar.1">
-                    <page id="Toolbar.1"></page>
+                    <page id="Toolbar.1"/>
                 </dock>
-                <split size="809"></split>
+                <split size="957"/>
                 <splitter orientation="2">
-                    <split size="330"></split>
+                    <split size="398"/>
                     <dock id="" activePageId="Viewer.1">
-                        <page id="Viewer.1"></page>
+                        <page id="Viewer.1"/>
                     </dock>
-                    <split size="330"></split>
+                    <split size="397"/>
                     <dock id="" activePageId="DAG.1">
-                        <page id="DAG.1"></page>
-                        <page id="Curve Editor.1"></page>
-                        <page id="DopeSheet.1"></page>
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
                     </dock>
                 </splitter>
             </splitter>
-            <split size="493"></split>
+            <split size="579"/>
             <dock id="" activePageId="Properties.1">
-                <page id="Properties.1"></page>
+                <page id="Properties.1"/>
             </dock>
         </splitter>
     </window>
@@ -34,7 +34,7 @@ define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
 }
 Root {
  inputs 0
- name H:/app/webGLMesh/texture.nk
+ name C:/wamp/www/webGlSingleTexture/texture.nk
  last_frame 2
  lock_range true
  format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
@@ -43,7 +43,7 @@ Root {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/pz_######.gif
+ file texture/pz_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -62,7 +62,7 @@ Transform {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/py_######.gif
+ file texture/py_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -81,7 +81,7 @@ Transform {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/px_######.gif
+ file texture/px_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -100,7 +100,7 @@ Transform {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/nz_######.gif
+ file texture/nz_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -120,7 +120,7 @@ Transform {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/ny_######.gif
+ file texture/ny_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -140,7 +140,7 @@ Transform {
 push 0
 Read {
  inputs 0
- file H:/app/webGLMesh/texture/nx_######.gif
+ file texture/nx_######.gif
  format "512 512 0 0 512 512 1 square_512"
  last 2
  origlast 2
@@ -159,7 +159,7 @@ Transform {
 }
 Read {
  inputs 0
- file H:/app/webGLMesh/uv.png
+ file uv.png
  format "2048 2048 0 0 2048 2048 1 square_2K"
  origset true
  name Read1
@@ -172,33 +172,27 @@ Merge2 {
  xpos -88
  ypos 3
 }
-set N7ef4cd0 [stack 0]
-EXPTool {
- red 0.2
- green 0.2
- blue 0.2
- name EXPTool1
- xpos 55
- ypos 3
-}
+set N7bb9870 [stack 0]
 Write {
- file H:/app/webGLMesh/testHl.png
- file_type png
+ file C:/wamp/www/webGlSingleTexture/test.tga
+ file_type targa
+ compression none
  use_limit true
  checkHashOnRead false
- version 1
+ version 2
  name Write2
  selected true
- xpos 36
- ypos 57
+ xpos 16
+ ypos 53
 }
 Viewer {
+ frame 1
  input_process false
  name Viewer1
- xpos -88
- ypos 109
+ xpos 24
+ ypos 112
 }
-push $N7ef4cd0
+push $N7bb9870
 Write {
  file H:/app/webGLMesh/test.png
  file_type png
@@ -206,6 +200,6 @@ Write {
  checkHashOnRead false
  version 5
  name Write1
- xpos -88
- ypos 49
+ xpos -118
+ ypos 64
 }

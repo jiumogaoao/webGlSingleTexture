@@ -83,6 +83,7 @@
 					},
 			}
 			function playerReload(key){
+				$("#container").empty();
 				player.setObj(spaceGroup[key].object);
 				player.setTexture(spaceGroup[key].texture);
 				player.chooseObj=function(name){
@@ -91,9 +92,10 @@
 					}
 				}
 				player.load();
-				player.play();
+				
 			}
 			playerReload("defaultSpace");
+			player.play();
 		</script>
 	</body>
 </html>
