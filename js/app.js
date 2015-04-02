@@ -44,9 +44,9 @@ var player={
 			mouse = new THREE.Vector2(),
 			objs=[],
 			textureUrl=[],
-			lastMt=null;
-			var texture = new THREE.Texture();
-			var textureHl = new THREE.Texture();
+			lastMt=null,
+			texture = new THREE.Texture();
+			
 			
 
 			function init() {
@@ -81,17 +81,10 @@ var player={
 
 
 				var Tloader = new THREE.ImageLoader( manager );
-				debugger;
-				Tloader.load( textureUrl[0], function ( image ) {
+				Tloader.load( textureUrl, function ( image ) {
 
 					texture.image = image;
 					texture.needsUpdate = true;
-
-				} );
-				Tloader.load( textureUrl[1], function ( image ) {
-
-					textureHl.image = image;
-					textureHl.needsUpdate = true;
 
 				} );
 				// model
@@ -104,7 +97,7 @@ var player={
 							console.log(child)
 						if ( child instanceof THREE.Mesh ) {
 							console.log(child)
-							child.material=new THREE.MeshBasicMaterial( { map: texture,overdraw: 0.5 } );;
+							child.material=new THREE.MeshBasicMaterial( { map: texture,overdraw:1.5,transparent:true,opacity:1 } );
 
 						}
 
@@ -123,8 +116,9 @@ var player={
 						} else {
 							renderer = new THREE.CanvasRenderer();
 						}
-				renderer.setPixelRatio( window.devicePixelRatio );
+				//renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setClearColor( 0xff0000 );
 				container.appendChild( renderer.domElement );
 
 				document.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -135,7 +129,7 @@ var player={
 
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-
+				document.addEventListener( 'touchend', onDocumentTouchEnd, false );
 				//
 
 				window.addEventListener( 'resize', onWindowResize, false );
@@ -150,7 +144,31 @@ var player={
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
+			function heightLight(selectObj){
+				if(lastMt){
+							lastMt.opacity=1;
+							lastMt.needsUpdate = true;
+						}
+						selectObj.material.opacity=0.5;
+						selectObj.material.needsUpdate = true;
+						lastMt=selectObj.material
 
+			}
+			function findObj(event){
+				
+				mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+					mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+					raycaster.setFromCamera( mouse, camera );
+	
+					var intersects = raycaster.intersectObjects( scene.children );
+					console.log(intersects)
+					if ( intersects.length > 0 ) {
+						touch.name=intersects[ 0 ].object.name;
+						touch.point=intersects[ 0 ].object
+						heightLight(intersects[ 0 ].object)
+					}
+			}
 			function onDocumentMouseDown( event ) {
 
 				event.preventDefault();
@@ -159,26 +177,7 @@ var player={
 					touch.time=new Date().getTime();
 					touch.name="";
 					touch.point={};
-					mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
-					mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
-	
-					raycaster.setFromCamera( mouse, camera );
-	
-					var intersects = raycaster.intersectObjects( scene.children );
-					if ( intersects.length > 0 ) {
-						touch.name=intersects[ 0 ].object.name;
-						touch.point=intersects[ 0 ].point
-						if(lastMt){
-							lastMt.map=texture;
-							lastMt.needsUpdate = true;
-						}
-						intersects[ 0 ].object.material.map=textureHl
-						intersects[ 0 ].object.material.needsUpdate = true;
-						lastMt=intersects[ 0 ].object.material
-						source.chooseObj(intersects[ 0 ].object.name)
-					}
-
-					console.log(intersects)
+					findObj(event)
 
 				isUserInteracting = true;
 
@@ -198,30 +197,16 @@ var player={
 					lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
 
 				}else{
-					mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
-					mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
-	
-					raycaster.setFromCamera( mouse, camera );
-	
-					var intersects = raycaster.intersectObjects( scene.children );
-					if ( intersects.length > 0 ) {
-						touch.name=intersects[ 0 ].object.name;
-						touch.point=intersects[ 0 ].point
-						if(lastMt){
-							lastMt.map=texture;
-							lastMt.needsUpdate = true;
-						}
-						intersects[ 0 ].object.material.map=textureHl
-						intersects[ 0 ].object.material.needsUpdate = true;
-						lastMt=intersects[ 0 ].object.material
-					}
-
-					console.log(intersects)
+					findObj(event)
 				}
 			}
 
 			function onDocumentMouseUp( event ) {
-
+				var uptime=new Date().getTime();
+				if(uptime-touch.time<300){
+					source.chooseObj(touch.point.name)
+				}
+					
 				isUserInteracting = false;
 
 			}
@@ -257,7 +242,12 @@ var player={
 				if ( event.touches.length == 1 ) {
 
 					event.preventDefault();
-
+					touch.time=new Date().getTime();
+					touch.name="";
+					touch.point={};
+					event.clientX=event.touches[0].clientX;
+					event.clientY=event.touches[0].clientY;
+					findObj(event)
 					onPointerDownPointerX = event.touches[ 0 ].pageX;
 					onPointerDownPointerY = event.touches[ 0 ].pageY;
 
@@ -273,12 +263,21 @@ var player={
 				if ( event.touches.length == 1 ) {
 
 					event.preventDefault();
-
+					
 					lon = ( onPointerDownPointerX - event.touches[0].pageX ) * 0.1 + onPointerDownLon;
 					lat = ( event.touches[0].pageY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
 
 				}
 
+			}
+
+			function onDocumentTouchEnd(event){
+				var uptime=new Date().getTime();
+				if(uptime-touch.time<300){
+					source.chooseObj(touch.point.name)
+				}
+					
+				isUserInteracting = false;
 			}
 
 			function animate() {
@@ -314,7 +313,7 @@ var player={
 				objs=array;
 			}
 			function setTexture(array){
-				textureUrl=array;debugger;
+				textureUrl=array;
 			}
 			
 			source.load=init;

@@ -44,14 +44,56 @@
 
 		<script src="js/app.js"></script>
 		<script type="text/javascript">
-			player.setObj(["house1.obj","house2.obj","house3.obj","house4.obj","house5.obj","house6.obj","house7.obj"]);
-			player.setTexture(["test.gif","testHl.gif"]);
-			debugger;
-			player.chooseObj=function(name){
-				$("#message").html(name);
+			var spaceGroup={
+					defaultSpace:{
+						object:["house1.obj","house2.obj","house3.obj","house4.obj","house5.obj","house6.obj","house7.obj"],
+						texture:"test.gif",
+						data:{}
+					},
+					"house1":{
+						object:["house1.obj","house2.obj","house3.obj","house4.obj","house5.obj","house6.obj","house7.obj"],
+						texture:"test.gif",
+						data:{}
+					}
 			}
-			player.load();
-			player.play();
+			var descriptionGroup={
+					"house2":{
+						description:"house2",
+						data:{}
+					},
+					"house3":{
+						description:"house3",
+						data:{}
+					},
+					"house4":{
+						description:"house4",
+						data:{}
+					},
+					"house5":{
+						description:"house5",
+						data:{}
+					},
+					"house6":{
+						description:"house6",
+						data:{}
+					},
+					"house7":{
+						description:"house7",
+						data:{}
+					},
+			}
+			function playerReload(key){
+				player.setObj(spaceGroup[key].object);
+				player.setTexture(spaceGroup[key].texture);
+				player.chooseObj=function(name){
+					if(spaceGroup[name]){
+						playerReload(name)
+					}
+				}
+				player.load();
+				player.play();
+			}
+			playerReload("defaultSpace");
 		</script>
 	</body>
 </html>
